@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'ChartView.css' %}">
+    <link href='http://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+{# Chart #}
+<div id="chart" class="reset-this" style="align-self: center; position: absolute; justify-self: center;">
+    <div id="chart_box1"></div>
+    <div id="chart_box2">
+        <p style="margin-top: 28px; margin-left: 5px; position: absolute; font-size: 20px; "><strong>{{ ticker.name }}</strong></p>
+        <p style="margin-top: 32px; margin-left: 225px; position: absolute; font-size: 12px;"><strong>{{ today }}</strong></p>
+        <p style="margin-top: 32px; margin-left: 305px; position: absolute; font-size: 12px;"><strong>O:</strong> {{ last_item_values.0 }}</p>
+        <p style="margin-top: 32px; margin-left: 385px; position: absolute; font-size: 12px;"><strong>H:</strong> {{ last_item_values.2 }}</p>
+        <p style="margin-top: 32px; margin-left: 465px; position: absolute; font-size: 12px;"><strong>L:</strong> {{ last_item_values.3 }}</p>
+        <p style="margin-top: 32px; margin-left: 545px; position: absolute; font-size: 12px;"><strong>C:</strong> {{ last_item_values.1 }}</p>
+        <p style="margin-top: 29px; margin-left: 645px; position: absolute; font-size: 17px;
+                color: {% if last_item_values.6 == True %}green;{% else %}red;{% endif %};"><strong>{{last_item_values.4}}</strong></p>
+        <p style="margin-top: 29px; margin-left: 710px; position: absolute; font-size: 17px;
+                color: {% if last_item_values.6 == True %}green;{% else %}red;{% endif %};"><strong>{{last_item_values.5}}%</strong> </p>
+
+    </div>
+    <div id="chart_box3"></div>
+    <div id="chart_box4"></div>
+    <div id="chart_box5">
+        <!--Displaying the chart as div with heght/width parameters. Chart position - relatevide. Candle, Date, Prices = position absolute. -->
+        <div class="chart" style="
+            position: relative;
+            height: 320px;
+            width: 750px;
+            margin: 0;
+            ">
+        <!--Displaying the prices labels. Margin-left = width(chart) + 5px.  -->
+            {% for price, margin in prices_margins %}
+             <div class="prices" style="position: absolute;margin-left: 755px;font-size: 11px;margin-top:{{margin}}px;">-{{price}}</div>
+             <div style="position: absolute; margin-top:{{margin|add:7}}px; border-bottom:1px dotted rgb(232, 232, 232); width: 740px; margin-left: 5px;"></div>
+            {% endfor %}
+
+        <!--Displaying the date labels. When 2 numbers date -> margin-left = margin-left(candle) - 4px.-->
+        {#            <div class="date" style="position: absolute; font-size: 12px; margin-left: 16px; margin-top:325px;">01</div>#}
+
+        <!--Displaying a candle. Margin-top = margin-top(price) + 7.5px. Margin-left = margin-left(date) + 4px. Shadows
+            margin-top += 1px since border of the candle = 1px. Volume labels - margin-left the same as for candle -->
+        {% for item in items %}
+             <div class="candle" style="
+                    position: absolute;
+                    margin-top: {{item.item_margin_top}}px;
+                    height: {{item.item_height}}px;
+                    width: 2px;
+                    margin-left: {{item.margin_left_value}}px;
+                    background-color:
+                     {% if item.updown_item == 'Down' %}
+                            rgb(233, 121, 121)
+                     {% else %}
+                            rgb(92, 189, 120)
+                     {% endif %};
+                    border: 1px solid black;
+                    ">
+                <div class="u_shadow" style="
+                    position: absolute;
+                    border-left: 1px solid black;
+                    height: {{item.shadow_uheight}}px;
+                    margin-top: -{{item.shadow_uheight|add:1}}px;
+                    margin-left: 0.5px;
+                    "></div>
+                <div class="d_shadow" style="
+                    position: absolute;
+                    border-left: 1px solid black;
+                    height: {{item.shadow_dheight}}px;
+                    margin-top: {{item.item_height|add:1}}px;
+                    margin-left: 0.5px;
+                    "></div>
+              </div>
+        {% endfor %}
+
+    </div>
+    </div>
+    <div id="chart_box6"></div>
+    <div id="chart_box7"></div>
+    <div id="chart_box8">
+
+        {% for margin, date in dates_margins.items %}
+            <div id="date" style="
+            position: absolute;
+            margin-top: 2px;
+            margin-left:{{margin}}px;
+            font-size: 10px;">{{date}}</div>
+        {% endfor %}
+
+        {% for height, martop, mar_left in volume_hm %}
+            <div class="volume" style="
+                    position: absolute;
+                    border-left: 1px solid black;
+                    {#59px = height + margintop}#}
+                    height:{{height}}px;
+                    margin-top:{{martop}}px;
+                    margin-left:{{mar_left}}px;
+                    "></div>
+        {% endfor %}
+
+    </div>
+    <div id="chart_box9">
+        <div id="max_value" style="font-size:10px; margin-top: 2px; margin-left: 4px;">-{{max_min_vol.0}}</div>
+        <div id="min_value" style="font-size:10px; margin-top: 30px; margin-left: 4px;">-{{max_min_vol.1}}</div>
+    </div>
+</div>
+
+
+</body>
+</html>
