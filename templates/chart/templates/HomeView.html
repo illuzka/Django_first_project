@@ -22,13 +22,13 @@
     <div id="search" >
         <form action="" method="GET" >
         <div class="md-form active-cyan-2 mb-3">
-          <input class="form-control" type="text" placeholder="search: {{ request.GET.q }}" aria-label="Search" name="q" style="margin-top: 5px; font-size: 20px;" autofocus autocomplete="off">
+          <input class="form-control" type="text" placeholder="search: {{ request.GET.q }}" aria-label="Search" name="q" style="margin-top: 10px; font-size: 15px;" autofocus autocomplete="off" id="input_search_field">
         </div>
         </form>
     </div>
 
 
-    <div id="box5"></div>
+    <div id="box5" style="display: none;"></div>
     <div id="box6">
            <p>Cryptocurrencies:  {{ nr_of_tickers }} </p>
             <p >Market Cap:  {{ mt_dom_vol_marcap.2 }} </p>
@@ -40,8 +40,8 @@
         <div id="box_sort1_results1">
 
        <div>
-        <p class="sorting_tickers" style="margin-top: 23px;">Volume: </p>
-                {% for x in sort_by_volume %}
+        <p class="sorting_tickers" style="margin-top: 26px;">By Volume: </p>
+               <p style="margin-top: 15px;"> {% for x in sort_by_volume %}
                    <p class="sort_by"><a href="#" id="{{x.1}}vol">{{ x.2 }}</a></p>
                     <script>
                         $(document).ready(function() {
@@ -55,54 +55,13 @@
                     });
                     </script>
                 {% endfor %}
+           </p>
             </div>
         </div>
-
 
         <div id="box_sort1_results2">
-            <div>
-            <p class="sorting_tickers" style="margin-top: 23px;">Top Gainers %: </p>
-                {% for x in sort_by_gainers_losers.0 %}
-                   <p class="sort_by"><a href="#" id="{{x.1}}Gai">{{ x.2 }}</a></p>
-                    <script>
-                        $(document).ready(function() {
-                        $('#{{x.1}}Gai').on('click',function(event){
-                        event.preventDefault();
-                        event.stopImmediatePropagation();
-                        var url = '{% url 'ChartView' x.1 %}';
-                        $('#chart_iframe').attr('src', url).css('display', 'inline');
-                        $('#chart_iframe2').css('display', 'none');
-                      });
-                    });
-                    </script>
-                {% endfor %}
-            </div>
-        </div>
-        <div id="box_sort1_results3">
-            <p class="sorting_tickers" style="margin-top: 23px;">Top Losers %: </p>
-            <div>
-                {% for x in sort_by_gainers_losers.1 %}
-                   <p class="sort_by"><a href="#" id="{{x.1}}Los">{{ x.2 }}</a></p>
-                    <script>
-                        $(document).ready(function() {
-                        $('#{{x.1}}Los').on('click',function(event){
-                        event.preventDefault();
-                        event.stopImmediatePropagation();
-                        var url = '{% url 'ChartView' x.1 %}';
-                        $('#chart_iframe').attr('src', url).css('display', 'inline');
-                        $('#chart_iframe2').css('display', 'none');
-                      });
-                    });
-                    </script>
-                {% endfor %}
-            </div>
-        </div>
-
-
-    </div>
-    <div id="sorting_results2">
-        <div id="box_sort2_results1">
-         <p class="sorting_tickers" style="margin-top: 23px;">Top Gainers: </p>
+         <p class="sorting_tickers" style="margin-top: 26px;">Top gainers: </p>
+            <p style="margin-top: 15px;">
             <div>
                 {% for x in sort_by_gainers_losers.2 %}
                    <p class="sort_by"><a href="#" id="{{x.1}}Gain">{{ x.2 }}</a></p>
@@ -118,10 +77,13 @@
                     });
                     </script>
                 {% endfor %}
+        </p>
             </div>
+
         </div>
-        <div id="box_sort2_results2">
-        <p class="sorting_tickers" style="margin-top: 23px;">Top Losers: </p>
+        <div id="box_sort1_results3">
+          <p class="sorting_tickers" style="margin-top: 26px;">Top losers: </p>
+        <p style="margin-top: 15px;">
             <div>
                 {% for x in sort_by_gainers_losers.3 %}
                    <p class="sort_by"><a href="#" id="{{x.1}}Lose">{{ x.2 }}</a></p>
@@ -137,12 +99,65 @@
                     });
                     </script>
                 {% endfor %}
+        </p>
+            </div>
+        </div>
+
+    </div>
+    <div id="sorting_results2">
+        <div id="box_sort2_results1">
+
+
+         <div>
+            <p class="sorting_tickers" style="margin-top: 26px;">Top gainers <span style="font-size: 12px;">%</span>: </p>
+            <p style="margin-top: 15px;">
+                {% for x in sort_by_gainers_losers.0 %}
+                   <p class="sort_by"><a href="#" id="{{x.1}}Gai">{{ x.2 }}</a></p>
+                    <script>
+                        $(document).ready(function() {
+                        $('#{{x.1}}Gai').on('click',function(event){
+                        event.preventDefault();
+                        event.stopImmediatePropagation();
+                        var url = '{% url 'ChartView' x.1 %}';
+                        $('#chart_iframe').attr('src', url).css('display', 'inline');
+                        $('#chart_iframe2').css('display', 'none');
+                      });
+                    });
+                    </script>
+                {% endfor %}
+            </p>
+            </div>
+
+/       </div>
+        <div id="box_sort2_results2">
+
+          <p class="sorting_tickers" style="margin-top: 26px;">Top losers <span style="font-size: 12px;">%</span>: </p>
+            <div>
+            <p style="margin-top: 15px;">
+                {% for x in sort_by_gainers_losers.1 %}
+                   <p class="sort_by"><a href="#" id="{{x.1}}Los">{{ x.2 }}</a></p>
+                    <script>
+                        $(document).ready(function() {
+                        $('#{{x.1}}Los').on('click',function(event){
+                        event.preventDefault();
+                        event.stopImmediatePropagation();
+                        var url = '{% url 'ChartView' x.1 %}';
+                        $('#chart_iframe').attr('src', url).css('display', 'inline');
+                        $('#chart_iframe2').css('display', 'none');
+                      });
+                    });
+                    </script>
+                {% endfor %}
+            </p>
+
+
             </div>
         </div>
         <div id="box_sort2_results3">
         <div>
-        <p class="sorting_tickers" style="margin-top: 23px;">Unusual volume: </p>
-                {% for x in sort_by_unusual_volume %}
+        <p class="sorting_tickers" style="margin-top: 26px;">Unusual vol: </p>
+                <p style="margin-top: 15px;">
+                    {% for x in sort_by_unusual_volume %}
                    <p class="sort_by"><a href="#" id="{{x.1}}Unus">{{ x.2 }}</a></p>
                     <script>
                         $(document).ready(function() {
@@ -156,11 +171,10 @@
                     });
                     </script>
                 {% endfor %}
+            </p>
             </div>
         </div>
-
     </div>
-
     <div id="chart">
         <div id="iframe_chart" align="center">
           <iframe name="chart_iframe" id="chart_iframe" src="about:blank" frameBorder="0" width=900 height="450" style="display: none;"></iframe>
