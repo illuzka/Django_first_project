@@ -6,6 +6,7 @@ from .models import ChartTicker, ChartItem, ChartItemData
 from datetime import datetime
 from django.db.models import Q
 from chart.backend.scrapping.tables import MainTable
+from django.core.paginator import Paginator
 
 class HomeView(View):
     # #
@@ -17,19 +18,9 @@ class HomeView(View):
     # ModelsCreation().items_creation()
     # ModelsCreation().chart_item_data_creation()
 
-    tickers = ChartTicker.objects.all()
-    nr_of_tickers = len(tickers)
-
     """
-    Sorting
-    """
-    sort_by_volume = DataFilters().sort_by_volume(tickers)
-    sort_by_gainers_losers = DataFilters().sort_by_gainers_losers(tickers)
-    sort_by_unusual_volume = DataFilters().sort_by_unusual_volume(tickers)
-
-    """
-    Scrapping
-    """
+    # Scrapping
+    # """
     if MainTable().gainers_losers() and MainTable().dom_vol_marcap() != None:
         mt_gainers_losers = MainTable().gainers_losers()
         mt_dom_vol_marcap = MainTable().dom_vol_marcap()
@@ -39,21 +30,35 @@ class HomeView(View):
 
 
     def get(self, request):
+
+        tickers_list = ChartTicker.objects.all()
         # Search
         query = request.GET.get('q')
         if query:
-            search_result = self.tickers.filter(Q(name__icontains=query) | Q(full_name__icontains=query))
+            search_result = tickers_list.filter(Q(name__icontains=query) | Q(full_name__icontains=query))
         else:
             search_result = None
+
+
+        paginator = Paginator(tickers_list, 16)
+        page = request.GET.get('page')
+        tickers = paginator.get_page(page)
+
+        sort_by_volume = DataFilters().sort_by_volume(tickers)
+        sort_by_gainers_losers = DataFilters().sort_by_gainers_losers(tickers)
+        sort_by_unusual_volume = DataFilters().sort_by_unusual_volume(tickers)
+
+        nr_of_tickers = len(tickers_list)
+
         context = {
-            'tickers': self.tickers,
-            'sort_by_volume': self.sort_by_volume,
+            'tickers': tickers,
             'search_result': search_result,
-            'sort_by_gainers_losers': self.sort_by_gainers_losers,
-            'sort_by_unusual_volume': self.sort_by_unusual_volume,
+            'sort_by_volume': sort_by_volume,
+            'sort_by_gainers_losers': sort_by_gainers_losers,
+            'sort_by_unusual_volume': sort_by_unusual_volume,
             'mt_gainers_losers': self.mt_gainers_losers,
             'mt_dom_vol_marcap': self.mt_dom_vol_marcap,
-            'nr_of_tickers': self.nr_of_tickers,
+            'nr_of_tickers': nr_of_tickers,
 
         }
         return render(request, 'chart/templates/HomeView.html', context)

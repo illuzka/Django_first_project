@@ -14,7 +14,7 @@ class DataRequest:
     url_dailyhistorical = "https://min-api.cryptocompare.com/data/histoday"
     # sample list_of_coins_request()
     # coins = ['42', '300', '365', '404', '433', '611', '808', '888', '1337', '2015', 'BTC', 'ETH', 'LTC', 'DASH', 'XRP', 'XLM']
-    coins = ['BTC', 'ETH', 'XRP', 'BCH', 'EOS', 'LTC', 'BNB', 'USDT', 'XLM', 'ADA', 'TRX', 'XMR', 'BSV', 'DASH', 'XTZ', 'MIOTA', 'NEO', 'ETC', 'ONT', 'MKR', 'XEM', 'BAT', 'CRO', 'ZEC', 'VET', 'DOGE', 'USDC', 'BTG', 'REP', 'DCR', 'OMG', 'WAVES', 'NANO', 'QTUM', 'TUSD', 'LSK', 'RVN', 'BCD']
+    coins = ['BTC', 'ETH', 'XRP', 'BCH', 'EOS', 'LTC', 'BNB', 'USDT', 'XLM', 'ADA', 'TRX', 'XMR', 'BSV', 'DASH', 'XTZ', 'MIOTA', 'NEO', 'ETC', 'ONT', 'MKR', 'XEM', 'BAT', 'CRO', 'ZEC', 'VET', 'DOGE', 'USDC', 'BTG', 'REP', 'DCR', 'OMG', 'WAVES', 'NANO', 'QTUM', 'TUSD', 'LSK', 'RVN', 'BCD','HOT', 'ICX', 'ZRX', 'LINK', 'BCN', 'ZIL', 'BTS', 'BTT', 'IOST', 'PAX', 'DGB', 'NPXS', 'XVG', 'ENJ', 'AE', 'HT', 'AOA', 'KMD', 'STEEM', 'SC', 'KCS', 'BTM', 'MXM', 'WTC', 'STRAT', 'THETA', 'DAI', 'SNT', 'FCT', 'INB', 'XIN', 'ABBC', 'CNX', 'MCO', 'GNT', 'QBIT', 'ARDR', 'WAX', 'ORBS', 'THR', 'PPT', 'GXC', 'VEST', 'MONA', 'DGD', 'PAI', 'MAID', 'ODE', 'ARK']
     # coins = ['888', '1337', 'BTC', 'XRP', 'XLM']
     # coins = [ 'BTC']
     # coins = ['BTC', 'ETH', 'LTC', 'DASH', 'XRP', 'XLM']
