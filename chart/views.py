@@ -47,15 +47,21 @@ class HomeView(View):
             search_result = None
         context = {
             'tickers': self.tickers,
-            'search_result': search_result,
             'sort_by_volume': self.sort_by_volume,
+            'search_result': search_result,
             'sort_by_gainers_losers': self.sort_by_gainers_losers,
             'sort_by_unusual_volume': self.sort_by_unusual_volume,
             'mt_gainers_losers': self.mt_gainers_losers,
             'mt_dom_vol_marcap': self.mt_dom_vol_marcap,
             'nr_of_tickers': self.nr_of_tickers,
+
         }
         return render(request, 'chart/templates/HomeView.html', context)
+
+
+
+
+
 
 
 
@@ -116,4 +122,8 @@ class ChartView(View):
         }
 
         return render(request, 'chart/templates/ChartView.html', context)
+
+
+
+
 

@@ -17,6 +17,8 @@
 
 <div id="wrapper">
     <div id="box1"></div>
+    <div id="box2" ></div>
+    <div id="box3"></div>
     <div id="search" >
         <form action="" method="GET" >
         <div class="md-form active-cyan-2 mb-3">
@@ -24,96 +26,26 @@
         </div>
         </form>
     </div>
-    <div id="box3"></div>
-    <div id="box4"></div>
-    <div id="box5">
-            <p>Cryptocurrencies:  {{ nr_of_tickers }} </p>
+
+
+    <div id="box5"></div>
+    <div id="box6">
+           <p>Cryptocurrencies:  {{ nr_of_tickers }} </p>
             <p >Market Cap:  {{ mt_dom_vol_marcap.2 }} </p>
             <p>24h Vol:  {{ mt_dom_vol_marcap.1 }} </p>
             <p>BTC Dominance:  {{ mt_dom_vol_marcap.0 }} </p>
             <p>Gainers/Losers:  {{ mt_gainers_losers.0 }}/{{ mt_gainers_losers.1 }} </p>
     </div>
-    <div id="box6"></div>
-    <div id="box7">
-        <div class="wrapper_sorting typo">Sorted by:
-          <div class="list"><span class="placeholder">select</span>
-            <ul class="list__ul">
+    <div id="sorting_results1">
+        <div id="box_sort1_results1">
 
-              <li><a href="#" id="sort_by_volume">volume</a></li>
-              <script>
-                  $('#sort_by_volume').click(function () {
-                     $('#sorting_by_volume').css('display', 'block');
-                     $('#sorting_by_gainers_per').css('display', 'none');
-                     $('#sorting_by_gainers_abs').css('display', 'none');
-                     $('#sorting_by_losers_per').css('display', 'none');
-                     $('#sorting_by_losers_abs').css('display', 'none');
-                     $('#unusual_volume').css('display', 'none');
-                  });
-              </script>
-                <li><a href="#" id="sort_by_gai_per">gainers %</a></li>
-                <script>
-                  $('#sort_by_gai_per').click(function () {
-                     $('#sorting_by_gainers_per').css('display', 'block');
-                     $('#sorting_by_volume').css('display', 'none');
-                     $('#sorting_by_gainers_abs').css('display', 'none');
-                     $('#sorting_by_losers_per').css('display', 'none');
-                     $('#unusual_volume').css('display', 'none');
-                     $('#sorting_by_losers_abs').css('display', 'none');
-                  });
-              </script>
-              <li><a href="#" id="sort_by_gai_abs">gainers</a></li>
-                <script>
-                  $('#sort_by_gai_abs').click(function () {
-                     $('#sorting_by_gainers_per').css('display', 'none');
-                     $('#sorting_by_volume').css('display', 'none');
-                     $('#sorting_by_losers_per').css('display', 'none');
-                     $('#unusual_volume').css('display', 'none');
-                     $('#sorting_by_losers_abs').css('display', 'none');
-                     $('#sorting_by_gainers_abs').css('display', 'block');
-                  });
-              </script>
-              <li><a href="#" id="losers_per">losers %</a></li>
-                 <script>
-                  $('#losers_per').click(function () {
-                     $('#sorting_by_gainers_per').css('display', 'none');
-                     $('#sorting_by_volume').css('display', 'none');
-                     $('#sorting_by_gainers_abs').css('display', 'none');
-                     $('#unusual_volume').css('display', 'none');
-                     $('#sorting_by_losers_abs').css('display', 'none');
-                     $('#sorting_by_losers_per').css('display', 'block');
-                  });
-              </script>
-              <li><a href="#" id="losers_abs">losers</a></li>
-                <script>
-                  $('#losers_abs').click(function () {
-                     $('#sorting_by_gainers_per').css('display', 'none');
-                     $('#sorting_by_volume').css('display', 'none');
-                     $('#sorting_by_gainers_abs').css('display', 'none');
-                     $('#sorting_by_losers_per').css('display', 'none');
-                     $('#unusual_volume').css('display', 'none');
-                     $('#sorting_by_losers_abs').css('display', 'block');
-                  });
-              </script>
-              <li><a href="#" id="unusual_vol">unusual volume</a></li>
-                 <script>
-                  $('#unusual_vol').click(function () {
-                     $('#sorting_by_gainers_per').css('display', 'none');
-                     $('#sorting_by_volume').css('display', 'none');
-                     $('#sorting_by_gainers_abs').css('display', 'none');
-                     $('#sorting_by_losers_per').css('display', 'none');
-                     $('#sorting_by_losers_abs').css('display', 'none');
-                     $('#unusual_volume').css('display', 'block');
-                  });
-              </script>
-             </ul>
-          </div>
-
-            <div id="sorting_by_volume" style="display: none;">
+       <div>
+        <p class="sorting_tickers" style="margin-top: 23px;">Volume: </p>
                 {% for x in sort_by_volume %}
-                   <p class="sort_by"><a href="#" id="{{x.1}}">{{ x.2 }}</a></p>
+                   <p class="sort_by"><a href="#" id="{{x.1}}vol">{{ x.2 }}</a></p>
                     <script>
                         $(document).ready(function() {
-                        $('#{{x.1}}').on('click',function(event){
+                        $('#{{x.1}}vol').on('click',function(event){
                         event.preventDefault();
                         event.stopImmediatePropagation();
                         var url = '{% url 'ChartView' x.1 %}';
@@ -124,106 +56,119 @@
                     </script>
                 {% endfor %}
             </div>
-            <div id="sorting_by_gainers_per" style="display: none;">
-                {% for x in sort_by_gainers_losers.0 %}
-                   <p class="sort_by"><a href="#" id="{{x.1}}gai_per">{{ x.2 }}</a></p>
-                    <script>
-                        $(document).ready(function() {
-                        $('#{{x.1}}gai_per').on('click',function(event){
-                        event.preventDefault();
-                        event.stopImmediatePropagation();
-                        var url = '{% url 'ChartView' x.1 %}';
-                        $('#chart_iframe').attr('src', url).css('display', 'inline');
-                        $('#chart_iframe2').css('display', 'none');
-                      });
-                    });
-                    </script>
-                {% endfor %}
-            </div>
-            <div id="sorting_by_gainers_abs" style="display: none;">
-                {% for x in sort_by_gainers_losers.2 %}
-                   <p class="sort_by"><a href="#" id="{{x.1}}gai_abs">{{ x.2 }}</a></p>
-                    <script>
-                        $(document).ready(function() {
-                        $('#{{x.1}}gai_abs').on('click',function(event){
-                        event.preventDefault();
-                        event.stopImmediatePropagation();
-                        var url = '{% url 'ChartView' x.1 %}';
-                        $('#chart_iframe').attr('src', url).css('display', 'inline');
-                        $('#chart_iframe2').css('display', 'none');
-                      });
-                    });
-                    </script>
-                {% endfor %}
-            </div>
-            <div id="sorting_by_losers_per" style="display: none;">
-                {% for x in sort_by_gainers_losers.1 %}
-                   <p class="sort_by"><a href="#" id="{{x.1}}los_per">{{ x.2 }}</a></p>
-                    <script>
-                        $(document).ready(function() {
-                        $('#{{x.1}}los_per').on('click',function(event){
-                        event.preventDefault();
-                        event.stopImmediatePropagation();
-                        var url = '{% url 'ChartView' x.1 %}';
-                        $('#chart_iframe').attr('src', url).css('display', 'inline');
-                        $('#chart_iframe2').css('display', 'none');
-                      });
-                    });
-                    </script>
-                {% endfor %}
-            </div>
-            <div id="sorting_by_losers_abs" style="display: none;">
-                {% for x in sort_by_gainers_losers.3 %}
-                   <p class="sort_by"><a href="#" id="{{x.1}}los_abs">{{ x.2 }}</a></p>
-                    <script>
-                        $(document).ready(function() {
-                        $('#{{x.1}}los_abs').on('click',function(event){
-                        event.preventDefault();
-                        event.stopImmediatePropagation();
-                        var url = '{% url 'ChartView' x.1 %}';
-                        $('#chart_iframe').attr('src', url).css('display', 'inline');
-                        $('#chart_iframe2').css('display', 'none');
-                      });
-                    });
-                    </script>
-                {% endfor %}
-            </div>
-            <div id="unusual_volume" style="display: none;">
-                {% for x in sort_by_unusual_volume %}
-                   <p class="sort_by"><a href="#" id="{{x.1}}un_vol">{{ x.2 }}</a></p>
-                    <script>
-                        $(document).ready(function() {
-                        $('#{{x.1}}un_vol').on('click',function(event){
-                        event.preventDefault();
-                        event.stopImmediatePropagation();
-                        var url = '{% url 'ChartView' x.1 %}';
-                        $('#chart_iframe').attr('src', url).css('display', 'inline');
-                        $('#chart_iframe2').css('display', 'none');
-                      });
-                    });
-                    </script>
-                {% endfor %}
-            </div>
-
-
-
-
-
-
-
         </div>
+
+
+        <div id="box_sort1_results2">
+            <div>
+            <p class="sorting_tickers" style="margin-top: 23px;">Top Gainers %: </p>
+                {% for x in sort_by_gainers_losers.0 %}
+                   <p class="sort_by"><a href="#" id="{{x.1}}Gai">{{ x.2 }}</a></p>
+                    <script>
+                        $(document).ready(function() {
+                        $('#{{x.1}}Gai').on('click',function(event){
+                        event.preventDefault();
+                        event.stopImmediatePropagation();
+                        var url = '{% url 'ChartView' x.1 %}';
+                        $('#chart_iframe').attr('src', url).css('display', 'inline');
+                        $('#chart_iframe2').css('display', 'none');
+                      });
+                    });
+                    </script>
+                {% endfor %}
+            </div>
+        </div>
+        <div id="box_sort1_results3">
+            <p class="sorting_tickers" style="margin-top: 23px;">Top Losers %: </p>
+            <div>
+                {% for x in sort_by_gainers_losers.1 %}
+                   <p class="sort_by"><a href="#" id="{{x.1}}Los">{{ x.2 }}</a></p>
+                    <script>
+                        $(document).ready(function() {
+                        $('#{{x.1}}Los').on('click',function(event){
+                        event.preventDefault();
+                        event.stopImmediatePropagation();
+                        var url = '{% url 'ChartView' x.1 %}';
+                        $('#chart_iframe').attr('src', url).css('display', 'inline');
+                        $('#chart_iframe2').css('display', 'none');
+                      });
+                    });
+                    </script>
+                {% endfor %}
+            </div>
+        </div>
+
+
     </div>
+    <div id="sorting_results2">
+        <div id="box_sort2_results1">
+         <p class="sorting_tickers" style="margin-top: 23px;">Top Gainers: </p>
+            <div>
+                {% for x in sort_by_gainers_losers.2 %}
+                   <p class="sort_by"><a href="#" id="{{x.1}}Gain">{{ x.2 }}</a></p>
+                    <script>
+                        $(document).ready(function() {
+                        $('#{{x.1}}Gain').on('click',function(event){
+                        event.preventDefault();
+                        event.stopImmediatePropagation();
+                        var url = '{% url 'ChartView' x.1 %}';
+                        $('#chart_iframe').attr('src', url).css('display', 'inline');
+                        $('#chart_iframe2').css('display', 'none');
+                      });
+                    });
+                    </script>
+                {% endfor %}
+            </div>
+        </div>
+        <div id="box_sort2_results2">
+        <p class="sorting_tickers" style="margin-top: 23px;">Top Losers: </p>
+            <div>
+                {% for x in sort_by_gainers_losers.3 %}
+                   <p class="sort_by"><a href="#" id="{{x.1}}Lose">{{ x.2 }}</a></p>
+                    <script>
+                        $(document).ready(function() {
+                        $('#{{x.1}}Lose').on('click',function(event){
+                        event.preventDefault();
+                        event.stopImmediatePropagation();
+                        var url = '{% url 'ChartView' x.1 %}';
+                        $('#chart_iframe').attr('src', url).css('display', 'inline');
+                        $('#chart_iframe2').css('display', 'none');
+                      });
+                    });
+                    </script>
+                {% endfor %}
+            </div>
+        </div>
+        <div id="box_sort2_results3">
+        <div>
+        <p class="sorting_tickers" style="margin-top: 23px;">Unusual volume: </p>
+                {% for x in sort_by_unusual_volume %}
+                   <p class="sort_by"><a href="#" id="{{x.1}}Unus">{{ x.2 }}</a></p>
+                    <script>
+                        $(document).ready(function() {
+                        $('#{{x.1}}Unus').on('click',function(event){
+                        event.preventDefault();
+                        event.stopImmediatePropagation();
+                        var url = '{% url 'ChartView' x.1 %}';
+                        $('#chart_iframe').attr('src', url).css('display', 'inline');
+                        $('#chart_iframe2').css('display', 'none');
+                      });
+                    });
+                    </script>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+
     <div id="chart">
         <div id="iframe_chart" align="center">
           <iframe name="chart_iframe" id="chart_iframe" src="about:blank" frameBorder="0" width=900 height="450" style="display: none;"></iframe>
         </div>
-
         {% if search_result %}
-        <div align="center"><iframe src="{% url 'ChartView' search_result.first.id %}" id="chart_iframe2" frameBorder="0" width=900 height="450" ></iframe></div>
+          <div align="center"><iframe src="{% url 'ChartView' search_result.first.id %}" id="chart_iframe2" frameBorder="0" width=900 height="450" ></iframe></div>
         {% endif %}
-
     </div>
-    <div id="box9"></div>
     <div id="box10">Data</div>
     <div id="box11">Data</div>
     <div id="box12">Data</div>
