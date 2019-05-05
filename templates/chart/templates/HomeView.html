@@ -10,6 +10,7 @@
 </head>
 <body>
 {% block content %}
+
 <script src="https://code.jquery.com/jquery-3.4.0.js"
   integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo="
   crossorigin="anonymous"></script>
@@ -26,8 +27,6 @@
         </div>
         </form>
     </div>
-
-
     <div id="box5" style="display: none;"></div>
     <div id="box6">
            <p>Cryptocurrencies:  {{ nr_of_tickers }} </p>
@@ -80,8 +79,7 @@
         </p>
             </div>
 
-        </div>
-        <div id="box_sort1_results3">
+        </div> <div id="box_sort1_results3">
           <p class="sorting_tickers" style="margin-top: 26px;">Top losers: </p>
         <p style="margin-top: 15px;">
             <div>
@@ -100,10 +98,7 @@
                     </script>
                 {% endfor %}
         </p>
-            </div>
-        </div>
-
-    </div>
+            </div> </div></div>
     <div id="sorting_results2">
         <div id="box_sort2_results1">
 
@@ -183,16 +178,88 @@
           <div align="center"><iframe src="{% url 'ChartView' search_result.first.id %}" id="chart_iframe2" frameBorder="0" width=900 height="450" ></iframe></div>
         {% endif %}
     </div>
-    <div id="box10">Data</div>
-    <div id="box11">Data</div>
-    <div id="box12">Data</div>
-</div>
+    <div id="data1">
+        <p id="data_title">Market news:</p>
+        <br>
+            <div id="news_01">
+                <p class="news_pub_dates">{{ news_pub_date.0 }}</p>
+                <p class="news_titles"><a href="{{ news_url.0 }}"> {{ news_title.0 }}</a></p>
+                 <p class="news_body"> {{ news_body.0 }} </p>
+                <br>
+                <br>
+            </div>
+            <div id="news_02">
+                  <p class="news_pub_dates">{{ news_pub_date.1 }}</p>
+                <p class="news_titles"><a href="{{ news_url.1 }}"> {{ news_title.1 }}</a></p>
+                <p class="news_body"> {{ news_body.1 }} </p>
+                <br>
+                <br>
+            </div>
+            <div id="news_03">
+                   <p class="news_pub_dates">{{ news_pub_date.2 }}</p>
+                <p class="news_titles"><a href="{{ news_url.2 }}"> {{ news_title.2 }}</a></p>
+                <p class="news_body"> {{ news_body.2 }} </p>
+                <br>
+                <br>
+            </div>
+            <div id="news_04">
+                  <p class="news_pub_dates">{{ news_pub_date.3 }}</p>
+                <p class="news_titles"><a href="{{ news_url.3 }}"> {{ news_title.3 }}</a></p>
+                <p class="news_body"> {{ news_body.3 }} </p>
+                <br>
+                <br>
+            </div>
+            <div id="news_05">
+                 <p class="news_pub_dates">{{ news_pub_date.4 }}</p>
+                <p class="news_titles"><a href="{{ news_url.4 }}"> {{ news_title.4 }}</a></p>
+                <p class="news_body"> {{ news_body.4 }} </p>
+                <br>
+                <br>
+
+            </div>
+            <div id="news_06">
+                 <p class="news_pub_dates">{{ news_pub_date.5 }}</p>
+                <p class="news_titles"><a href="{{ news_url.5 }}"> {{ news_title.5 }}</a></p>
+                <p class="news_body"> {{ news_body.5 }} </p>
+                <br>
+                <br>
+            </div>
+            <div id="news_07">
+                <p class="news_pub_dates">{{ news_pub_date.6 }}</p>
+                <p class="news_titles"><a href="{{ news_url.6 }}"> {{ news_title.6 }}</a></p>
+                <p class="news_body"> {{ news_body.6 }} </p>
+                <br>
+                <br>
+            </div>
+            <div id="news_08">
+                    <p class="news_pub_dates">{{ news_pub_date.7 }}</p>
+                <p class="news_titles"><a href="{{ news_url.7 }}"> {{ news_title.7 }}</a></p>
+                <p class="news_body"> {{ news_body.7 }} </p>
+                <br>
+                <br>
+            </div>
+            <div id="news_09">
+                       <p class="news_pub_dates">{{ news_pub_date.8 }}</p>
+                <p class="news_titles"><a href="{{ news_url.8 }}"> {{ news_title.8 }}</a></p>
+                <p class="news_body"> {{ news_body.8 }} </p>
+                <br>
+                <br>
+            </div>
+            <div id="news_10">
+                    <p class="news_pub_dates">{{ news_pub_date.9 }}</p>
+                <p class="news_titles"><a href="{{ news_url.9 }}"> {{ news_title.9 }}</a></p>
+                <p class="news_body"> {{ news_body.9 }} </p>
+                <br>
+                <br>
+            </div>
 
 
 
+    </div>
+    <div id="data2"></div>
+    <div id="data3"></div>
+    </div>
 {% endblock %}
-
-
 
 
 </body>
