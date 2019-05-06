@@ -28,3 +28,10 @@ class ChartItemData(models.Model):
     low = models.FloatField()
     volume = models.IntegerField()
     ticker = models.ForeignKey(ChartTicker, on_delete=models.CASCADE)
+
+
+class News(models.Model):
+    date = models.DateTimeField()
+    url = models.CharField(max_length=300)
+    title = models.CharField(max_length=300)
+    body = models.CharField(max_length=1000)

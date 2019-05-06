@@ -2,13 +2,43 @@ from django.shortcuts import render
 from django.views.generic import View
 from chart.backend.models.creation import ModelsCreation
 from chart.backend.models.processing import ModelsDataProcessing, DataFilters
-from .models import ChartTicker, ChartItem, ChartItemData
+from .models import ChartTicker, ChartItem, ChartItemData, News
 from datetime import datetime
 from django.db.models import Q
 from chart.backend.scrapping.tables import MainTable
 from django.core.paginator import Paginator
-from chart.backend.data.market_news import MarketNews
-import time
+from background_task import background
+import requests
+
+
+@background(schedule=50)
+def get_market_news():
+    key = '1de25ecebeecbd8918f258fb09d4333c50f6d855c3107a5e98650d65868c99dd'
+    url_request = 'https://min-api.cryptocompare.com/data/v2/news/?lang=EN&api_key=' + key
+    data = requests.get(url_request).json()
+
+    News.objects.all().delete()
+
+    try:
+        for i in range(5):
+            News.objects.bulk_create([
+            News(date=datetime.utcfromtimestamp(data['Data'][i]['published_on']).strftime('%Y-%m-%d %H:%M:%S'),
+                 url=data['Data'][i]['url'],
+                 title=data['Data'][i]['title'],
+                 body=data['Data'][i]['body'],
+                )
+        ])
+    except (ConnectionError, KeyError):
+        News.objects.bulk_create([
+            News(date=datetime.now(),
+                 url='Error',
+                 title='Error',
+                 body='Error',
+                 )
+        ])
+
+
+
 
 class HomeView(View):
     # #
@@ -32,10 +62,8 @@ class HomeView(View):
     """
     News data    
     """
-    news_pub_date = MarketNews().published_on()
-    news_title = MarketNews().title()
-    news_url = MarketNews().url()
-    news_body = MarketNews().body()
+
+    news = News.objects.all()
 
 
     def get(self, request):
@@ -57,6 +85,7 @@ class HomeView(View):
 
         nr_of_tickers = len(tickers_list)
 
+
         context = {
             'tickers': tickers,
             'search_result': search_result,
@@ -66,10 +95,7 @@ class HomeView(View):
             'mt_gainers_losers': self.mt_gainers_losers,
             'mt_dom_vol_marcap': self.mt_dom_vol_marcap,
             'nr_of_tickers': nr_of_tickers,
-            'news_pub_date': self.news_pub_date,
-            'news_title': self.news_title,
-            'news_url': self.news_url,
-            'news_body': self.news_body,
+            'news': self.news,
 
         }
         return render(request, 'chart/templates/HomeView.html', context)
