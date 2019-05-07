@@ -38,17 +38,15 @@ def get_market_news():
         ])
 
 
-
-
 class HomeView(View):
     # #
-    # ChartTicker.objects.all().delete()
-    # ChartItem.objects.all().delete()
-    # ChartItemData.objects.all().delete()
-    # # # # # # # # #
-    # ModelsCreation().ticker_creation()
-    # ModelsCreation().items_creation()
-    # ModelsCreation().chart_item_data_creation()
+    ChartTicker.objects.all().delete()
+    ChartItem.objects.all().delete()
+    ChartItemData.objects.all().delete()
+    # # # # # # # #
+    ModelsCreation().ticker_creation()
+    ModelsCreation().items_creation()
+    ModelsCreation().chart_item_data_creation()
     """
     # Scrapping
     # """
@@ -62,9 +60,7 @@ class HomeView(View):
     """
     News data    
     """
-
     news = News.objects.all()
-
 
     def get(self, request):
         tickers_list = ChartTicker.objects.all()
@@ -99,32 +95,6 @@ class HomeView(View):
 
         }
         return render(request, 'chart/templates/HomeView.html', context)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 class ChartView(View):
@@ -164,8 +134,3 @@ class ChartView(View):
         }
 
         return render(request, 'chart/templates/ChartView.html', context)
-
-
-
-
-

@@ -67,6 +67,7 @@ class DataProcessing(DataClearance):
         item_height = []
         item_up_shadow_height = []
         item_down_shadow_height = []
+        item_direction = self.item_direction()
 
         amt_of_items = int(len(self.item_data) / len(prlab_diff))
         i = 0
@@ -77,7 +78,7 @@ class DataProcessing(DataClearance):
         for ml, d in zip(self.max_high_min_low(), prlab_diff):
             for x in range(i, j):
                 try:
-                    if self.item_direction()[item_dir_counter] == 'Down':
+                    if item_direction[item_dir_counter] == 'Down':
                         item_martop.append((((ml[0] - self.item_data[x][self.OPEN]) / d) * 40) + 10 + 7.5)
                         item_height.append(((((ml[0] - self.item_data[x][self.CLOSE]) / d) * 40) + 10 + 7.5)
                                            - ((((ml[0] - self.item_data[x][self.OPEN]) / d) * 40) + 10 + 7.5))
@@ -89,7 +90,7 @@ class DataProcessing(DataClearance):
                                                - ((((ml[0] - self.item_data[x][self.OPEN]) / d) * 40) + 10 + 7.5))))))
                         item_dir_counter += 1
 
-                    elif self.item_direction()[item_dir_counter] == 'Up':
+                    elif item_direction[item_dir_counter] == 'Up':
                         item_martop.append((((ml[0] - self.item_data[x][self.CLOSE]) / d) * 40) + 10 + 7.5)
                         item_height.append(((((ml[0] - self.item_data[x][self.OPEN]) / d) * 40) + 10 + 7.5)
                                            - ((((ml[0] - self.item_data[x][self.CLOSE]) / d) * 40) + 10 + 7.5))
