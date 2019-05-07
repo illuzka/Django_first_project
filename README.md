@@ -1,2 +1,4 @@
-#Screener_01
-project for testing purposes -1
+My first Django project :) 
+Simple crypto screener/css charts with API data from cryptocompare.com.
+
+![alt text](https://github.com/illuzka/screener_01/blob/master/screener.png)
